@@ -65,7 +65,7 @@ live_loop :fx_automator do
   when :build_up then line(80, 100, steps: 128).take(sec_tick).last || 100
   when :main_groove then 120
   when :breakdown then 90
-  when :climax then line(120, 135, steps: 256).take(sec_tick).last || 135
+  when :climax then line(120, 130, steps: 256).take(sec_tick).last || 130
   else 130
   end
   
@@ -96,7 +96,7 @@ with_fx :compressor, threshold: 0.2, slope_above: 0.5, slope_below: 1, relax_tim
           
           amp_val = (st == :climax) ? 1.9 : 1.6
           if st == :climax && sec_tick && sec_tick > 128
-            sample :bd_tek, amp: amp_val * 1.1, cutoff: 140, lpf: 80 if one_in(3)
+            sample :bd_tek, amp: amp_val * 1.1, cutoff: 130, lpf: 80 if one_in(3)
           end
           
           sample :bd_tek, amp: amp_val, cutoff: cutoff_evolution if (spread 5, 8).tick
@@ -341,7 +341,7 @@ with_fx :compressor, threshold: 0.2, slope_above: 0.5, slope_below: 1, relax_tim
         
         if st == :breakdown
           use_synth :prophet
-          notes = (scale :e4, :major_blues, num_octaves: 2).shuffle
+          notes = (scale :e4, :major_pentatonic, num_octaves: 2).shuffle
           
           with_fx :reverb, room: 0.9, mix: 0.8 do
             with_fx :pan, pan: Math.sin(get(:global_tick) * 0.05) do
